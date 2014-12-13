@@ -15,18 +15,10 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-    // 要素を指定して操作を行う
-    var p = d3.select('body').selectAll('p');
-
-    // 同一メソッドに対する引数はJSONオブジェクトで書ける
-    p.text('hello from D3')
-            .style({
-                'font-size': '28px',
-                'font-weight': 'bold'
-            });
-
-    // 値の取得もできる
-    alert(p.style('font-size'));
+    // 要素を追加する
+    d3.select('body').append('p').text('hello 4');
+    // 要素を削除する(hello 1)が消える
+    d3.select('body').select('p').remove();
 
 </script>
 </body>
