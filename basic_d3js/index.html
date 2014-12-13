@@ -3,40 +3,64 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        .axis path, .axis line {
+            fill: none;
+            stroke: black;
+        }
+
+        .axis text {
+            font-size: 11px;
+        }
+    </style>
 </head>
 <body>
 
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-    // scaleを使う
-    var dataset = [11, 25, 45, 30, 33];
+    // axisを使う
+    var dataset = [11, 25, 45, 30];
     var w = 500;
     var h = 200;
+    var padding = 20;
 
     // 返るのは関数
     var xScale = d3.scale.linear()
         // input size
             .domain([0, d3.max(dataset)])
         // output size
-            .range([0, w])
+            .range([padding, w - padding])
         // niceは細かな値をよしなに調整してくれるらしい
             .nice();
 
 
     var svg = d3.select('body').append('svg').attr({width: w, hegiht: h});
 
+    var xAxis = d3.svg.axis()
+            .scale(xScale)
+        // ラベルを付ける場所
+            .orient('bottom');
+
+    // gはgroupらしい
+    svg.append('g')
+            .attr({
+                class: 'axis',
+                transform: 'translate(0, 100)'
+            })
+            .call(xAxis);
+
     svg.selectAll('rect')
             .data(dataset)
             .enter()
             .append('rect')
             .attr({
-                x: 0,
+                x: padding,
                 y: function (d, i) {
                     return i * 25;
                 },
                 width: function (d) {
-                    return xScale(d);
+                    return xScale(d) - padding;
                 },
                 height: 20,
                 fill: 'red'
