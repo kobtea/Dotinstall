@@ -15,10 +15,14 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-    // 要素を追加する
-    d3.select('body').append('p').text('hello 4');
-    // 要素を削除する(hello 1)が消える
-    d3.select('body').select('p').remove();
+    // データを使う
+    var dataset = [12, 24, 36];
+    var p = d3.select('body').selectAll('p');
+
+    // d: data, i: 添字
+    p.data(dataset).text(function(d, i){
+        return i + '番目の' + d;
+    })
 
 </script>
 </body>
