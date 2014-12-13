@@ -9,10 +9,21 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-    // 棒グラフかく
+    // scaleを使う
     var dataset = [11, 25, 45, 30, 33];
     var w = 500;
     var h = 200;
+
+    // 返るのは関数
+    var xScale = d3.scale.linear()
+        // input size
+            .domain([0, d3.max(dataset)])
+        // output size
+            .range([0, w])
+        // niceは細かな値をよしなに調整してくれるらしい
+            .nice();
+
+
     var svg = d3.select('body').append('svg').attr({width: w, hegiht: h});
 
     svg.selectAll('rect')
@@ -25,7 +36,7 @@
                     return i * 25;
                 },
                 width: function (d) {
-                    return d;
+                    return xScale(d);
                 },
                 height: 20,
                 fill: 'red'
