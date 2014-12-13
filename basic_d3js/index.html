@@ -9,38 +9,27 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-    // イベントフック
+    // 棒グラフかく
     var dataset = [11, 25, 45, 30, 33];
     var w = 500;
     var h = 200;
     var svg = d3.select('body').append('svg').attr({width: w, hegiht: h});
 
-    svg.selectAll('circle')
+    svg.selectAll('rect')
             .data(dataset)
             .enter()
-            .append('circle')
-            .on('mouseover', function(){
-                d3.select(this)
-                        .attr('fill', 'orange');
-            })
-            .on('mouseout', function(){
-                d3.select(this)
-                        .attr('fill', 'red');
-            })
-            .on('click', function(){
-                var rs = d3.select(this).attr('r');
-                alert(rs);
-            })
+            .append('rect')
             .attr({
-                cx: function (d, i) {
-                    return 50 + (i * 100);
+                x: 0,
+                y: function (d, i) {
+                    return i * 25;
                 },
-                cy: h / 2,
-                r: function (d) {
+                width: function (d) {
                     return d;
                 },
+                height: 20,
                 fill: 'red'
-            })
+            });
 </script>
 </body>
 </html>
