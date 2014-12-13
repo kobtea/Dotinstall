@@ -9,7 +9,7 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-    // グラフ描くよ！
+    // アニメーション効果
     var dataset = [11, 25, 45, 30, 33];
     var w = 500;
     var h = 200;
@@ -26,10 +26,18 @@
                     return 50 + (i * 100);
                 },
                 cy: h / 2,
-                r: function (d) {
-                    return d;
-                },
+                r: 0,
                 fill: 'red'
+            })
+            .transition()
+            // 要素間の遅延を起こす
+            .delay(function(d, i){
+                return i * 300;
+            })
+            .duration(1000)
+            .ease('bounce')
+            .attr({
+                r: function(d){return d;}
             });
 </script>
 </body>
