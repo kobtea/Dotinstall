@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<p>Hello 1</p>
+
+<p>Hello 2</p>
+
+<p>Hello 3</p>
+
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+    // 要素を指定して操作を行う
+    d3.select('body').selectAll('p').text('hello from D3');
+</script>
+</body>
+</html>
