@@ -9,33 +9,27 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-    // アニメーション効果
+    // イベントフック
     var dataset = [11, 25, 45, 30, 33];
     var w = 500;
     var h = 200;
     var svg = d3.select('body').append('svg').attr({width: w, hegiht: h});
 
-    // 今はcircleはないが後に操作できるように指定しておく
     svg.selectAll('circle')
             .data(dataset)
-        // 対応する要素が0の状態で追加したいのでenter
             .enter()
             .append('circle')
-            .transition()
-        // 要素間の遅延を起こす
-            .delay(function (d, i) {
-                return i * 300;
+            .on('mouseover', function(){
+                d3.select(this)
+                        .attr('fill', 'orange');
             })
-            .duration(1000)
-            .ease('bounce')
-            .each('start', function () {
-                // データごとにはじめにしたいこと
-                // thisは各data
-                d3.select(this).attr({
-                    fill: 'green',
-                    r: 0,
-                    cy: h
-                });
+            .on('mouseout', function(){
+                d3.select(this)
+                        .attr('fill', 'red');
+            })
+            .on('click', function(){
+                var rs = d3.select(this).attr('r');
+                alert(rs);
             })
             .attr({
                 cx: function (d, i) {
@@ -46,18 +40,6 @@
                     return d;
                 },
                 fill: 'red'
-            })
-            .each('end', function () {
-                // データごとに終わりにやりたいこと
-                d3.select(this)
-                        .transition()
-                        .duration(800)
-                        .attr({
-                            fill: 'pink',
-                            r: 0,
-                            cy: 0
-
-                        });
             })
 </script>
 </body>
