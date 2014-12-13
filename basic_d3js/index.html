@@ -6,48 +6,31 @@
 </head>
 <body>
 
-<p>Hello 1</p>
-
-<p>Hello 2</p>
-
-<p>Hello 3</p>
-
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-    // データを使う
-    var dataset = [12, 24, 36, 48];
-    var p = d3.select('body').selectAll('p');
+    // グラフ描くよ！
+    var dataset = [11, 25, 45, 30, 33];
+    var w = 500;
+    var h = 200;
+    var svg = d3.select('body').append('svg').attr({width: w, hegiht: h});
 
-    // d: data, i: 添字
-    p.data(dataset).text(function(d, i){
-        return i + '番目の' + d;
-    });
-
-    /*
-    dataを使った瞬間に仮想領域が作成される
-
-    - update: 対応する要素がある場合 -> text, styleを使う場合
-    - enter: 対応する要素が足りない場合 -> appendを使う場合
-    - exit: 対応する要素が余った場合 -> removeを使う場合
-     */
-
-    // dataを渡すとupdateが返る
-    var update = p.data(dataset);
-    var enter = update.enter();
-    var exit = update.exit();
-
-    update.text(function(d){
-        return 'update: ' + d;
-    });
-
-    enter.append('p').text(function (d){
-        return 'enter: ' + d;
-    });
-
-    // 今回は対象なし
-    exit.remove();
-
+    // 今はcircleはないが後に操作できるように指定しておく
+    svg.selectAll('circle')
+            .data(dataset)
+            // 対応する要素が0の状態で追加したいのでenter
+            .enter()
+            .append('circle')
+            .attr({
+                cx: function (d, i) {
+                    return 50 + (i * 100);
+                },
+                cy: h / 2,
+                r: function (d) {
+                    return d;
+                },
+                fill: 'red'
+            });
 </script>
 </body>
 </html>
