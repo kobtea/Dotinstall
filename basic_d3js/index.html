@@ -18,27 +18,47 @@
     // 今はcircleはないが後に操作できるように指定しておく
     svg.selectAll('circle')
             .data(dataset)
-            // 対応する要素が0の状態で追加したいのでenter
+        // 対応する要素が0の状態で追加したいのでenter
             .enter()
             .append('circle')
+            .transition()
+        // 要素間の遅延を起こす
+            .delay(function (d, i) {
+                return i * 300;
+            })
+            .duration(1000)
+            .ease('bounce')
+            .each('start', function () {
+                // データごとにはじめにしたいこと
+                // thisは各data
+                d3.select(this).attr({
+                    fill: 'green',
+                    r: 0,
+                    cy: h
+                });
+            })
             .attr({
                 cx: function (d, i) {
                     return 50 + (i * 100);
                 },
                 cy: h / 2,
-                r: 0,
+                r: function (d) {
+                    return d;
+                },
                 fill: 'red'
             })
-            .transition()
-            // 要素間の遅延を起こす
-            .delay(function(d, i){
-                return i * 300;
+            .each('end', function () {
+                // データごとに終わりにやりたいこと
+                d3.select(this)
+                        .transition()
+                        .duration(800)
+                        .attr({
+                            fill: 'pink',
+                            r: 0,
+                            cy: 0
+
+                        });
             })
-            .duration(1000)
-            .ease('bounce')
-            .attr({
-                r: function(d){return d;}
-            });
 </script>
 </body>
 </html>
